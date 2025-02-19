@@ -104,11 +104,14 @@ function App(){
     },[api]);
     return(
       <div style={{backgroundSize: "100% 100%",width: "100%",height: "100%"}} className={`${ph ? 'daytime' : 'nighttime'}`}>
-        {/*img for icon  */}
+      {/*img for icon  */}
         <img src={`https://openweathermap.org/img/wn/${temp.icon}@2x.png`} alt=''/>
-        {/*img for icon  */}
+      {/*img for icon  */}
+      {/**modal error */}
         <Modal view = {openOrhidden.view} message = {openOrhidden.msg}/>
+      {/**modal error */}
         <Card className='search' style={{height:search,width:"100%"}}>
+      {/**button hide serach*/}
           <button onClick={()=>{
             if(temp.country==="your location"&&location.latitude!==""){
               changeHsearch();
@@ -123,6 +126,8 @@ function App(){
             <div></div>
             <div></div>
           </button>
+      {/**button hide serach*/}
+      {/**list of cities*/}
           <div class="custom-radio-group" style={{overflow:"auto", marginTop:"20px" , direction:"ltr"}}>
             <label class="custom-radio-container">
               <input type="radio" name="custom-radio" onChange={()=>{
@@ -328,13 +333,17 @@ function App(){
               Suez
             </label>
           </div>
+      {/**list of cities*/}
         </Card>
-        <div id='content' style={{ height: '100vh', position:"relative"}}>
+        <div id='content'>
+      {/**button open serach*/}
           <div className='buttonSearch'>
             <button class="button" onClick={changeHsearch}>
               <span class="span">🔎</span>
             </button>
           </div> 
+      {/**button open serach*/}
+      {/**card content main information for weather */}
           <Card className='card'>
             <Typography  component="div">
             {temp.country}
@@ -347,17 +356,23 @@ function App(){
               H:{temp.min?temp.min:<CircularProgress color="inherit"/>}ْ<Tab></Tab>L:{temp.max?temp.max:<CircularProgress color="inherit"/>}ْ
             </Typography>
           </Card>
+      {/**card content main information for weather */}
+      {/**button open detail*/}
           <Card sx={{ minWidth: 275 }} className='card2'>
             <button onClick={changeHdetail}>
               <span>view more detail</span>
             </button>
           </Card>
+      {/**button open detail*/}
         </div>
         <Card className='details' style={{height:detail,overflow:"auto"}}>
+      {/*button hide detail*/}
           <button onClick={changeHdetail}>
             <div></div>
             <div></div>
           </button>
+      {/*button hide detail*/}
+      {/*more detail*/}
           <Card className='cardOnDetails'>
             <Typography component="div">feels like: {temp.feels_like?temp.feels_like:<CircularProgress color="inherit"/>}ْ</Typography>
             <Typography component="div">temp max: {temp.temp_max?temp.temp_max:<CircularProgress color='inherit'/>}ْ</Typography>
@@ -373,6 +388,7 @@ function App(){
             <Typography component="div">ground level: {temp.ground_level?temp.ground_level:<CircularProgress color='inherit'/>} hPa</Typography>
           </Card>
         </Card>
+      {/*more detail*/}
       </div>
   )
 }
