@@ -1,13 +1,13 @@
 import './Modal.css';
 export default function Modal({view,message}){
     return(
-    <div class="warning-general" style={{display:view}}>
-        <div class="confirm-div">
+    <div className="warning-general" style={{display:view}}>
+        <div className="confirm-div">
             <p>
             <strong>{message}</strong>
             </p>
-            <div class="modals-container">
-                <button class="green-btn" onClick={()=>{
+            <div className="modals-container">
+                <button className="green-btn" onClick={()=>{
                     window.location.reload();
                 }}>ok</button>
             </div>

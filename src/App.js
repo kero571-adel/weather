@@ -13,8 +13,9 @@ function App(){
   let[api,dispatch] = useReducer(FunApi,"https://api.openweathermap.org/data/2.5/weather?lat=30.0444&lon=31.2357&appid=4ffbfa8485a95042fd73469dca85c095");
   let[temp,settemp] = useState({number:null,min:null,max:null,dec:"",feels_like:null,temp_max:null,temp_min:null,speed_wind:null,degree_wind:null,humidity:null,ground_level:null,pressure:null,icon:"",country:"Cairo"});
   let[openOrhidden,setopenOrhidden] = useState({view:"none",msg:""});
-  const [location, setLocation] = useState({latitude:null,longitude:null});
   let[ph,setUrl] = useState(null);
+  let[location, setLocation] = useState({latitude:null,longitude:null});
+  //let[location, setLocation] = useState({latitude:null,longitude:null,city:""});
   useEffect(()=>{
     /**function for bachground in night or day*/
     function Daytime(){
@@ -48,6 +49,20 @@ function App(){
     }
     location();
     /**function for finding lat and lon user location*/
+    /**function for finding city name lat and lon user location*/
+    // fetch('https://api.ipify.org?format=json')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     const ipAddress = data.ip; // تخزين عنوان IP
+    //     // استخدام عنوان IP للحصول على معلومات الموقع
+    //     console.log(data.ip);
+    //     fetch(`https://ipapi.co/${ipAddress}/json/`)
+    //       .then(response => response.json())
+    //       .then(locationData => {
+    //         setLocation({...location,city:locationData.city}); // تحديث اسم المدينة
+    //         console.log("locationData.city"+locationData.city);
+    //       });
+    //   });
   },[]);
   /*function for change Height detail*/
   function changeHdetail(){
@@ -113,14 +128,40 @@ function App(){
         <Card className='search' style={{height:search,width:"100%"}}>
       {/**button hide serach*/}
           <button onClick={()=>{
-            if(temp.country==="your location"&&location.latitude!==""){
+            if(temp.country === "My location"&&location.latitude!==""){
               changeHsearch();
+              //dispatch({type:temp.country,payload:{latitude:location.latitude,longitude:location.longitude,city:location.city}});
               dispatch({type:temp.country,payload:{latitude:location.latitude,longitude:location.longitude}});
-            }else if(temp.country==="your location"&&location.latitude===""){
+              settemp({...temp,
+                number: null,
+                min: null,
+                max: null,
+                dec: "",
+                feels_like: null,
+                temp_max: null,
+                temp_min: null,
+                speed_wind: null,
+                degree_wind: null,
+                humidity: null,
+                ground_level: null,
+                pressure: null});
+            }else if(temp.country==="My location"&&location.latitude===""){
               setopenOrhidden({view:"",msg:"we can not locate you"});
             }else{
               changeHsearch();
-              dispatch({type:temp.country});     
+              dispatch({type:temp.country});  
+              settemp({...temp,number: null,
+                min: null,
+                max: null,
+                dec: "",
+                feels_like: null,
+                temp_max: null,
+                temp_min: null,
+                speed_wind: null,
+                degree_wind: null,
+                humidity: null,
+                ground_level: null,
+                pressure: null});   
             }
           }}>
             <div></div>
@@ -128,208 +169,209 @@ function App(){
           </button>
       {/**button hide serach*/}
       {/**list of cities*/}
-          <div class="custom-radio-group" style={{overflow:"auto", marginTop:"20px" , direction:"ltr"}}>
-            <label class="custom-radio-container">
+          <div className="custom-radio-group" style={{overflow:"auto", marginTop:"20px" , direction:"ltr"}}>
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" onChange={()=>{
-                settemp({...temp,country:"your location"});
+                //settemp({...temp,country:location.city!==""?location.city:"My location"});
+                settemp({...temp,country:"My location"});
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               your location
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Alex"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Alex
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Asyut"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Asyut
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Aswan"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Aswan
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Beheira"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Beheira
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Beni Suef"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Beni Suef
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Port Said"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Port Said
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option2" onChange={()=>{
                 settemp({...temp,country:"Cario"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Cario
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Dakahalia"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Dakahalia
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Damietta"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Damietta
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" onChange={()=>{
                 settemp({...temp,country:"Fakous"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Fakous
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Faiyam"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Faiyam
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Gharbia"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Gharbia
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Giza"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Giza
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Ismailia"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Ismailia
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Kafr el sheikh"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Kafr el sheikh
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Luxor"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Luxor
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Monufia"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Monufia
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Matrouh"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Matrouh
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Minya"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Minya
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"North Sinai"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               North Sinai
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"New Valley"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               New Valley
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Qalyubia"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Qalyubia
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Qena"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Qena
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Red Sea"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Red Sea
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Sharqia"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Sharqia
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Sohag"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Sohag
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"South sinai"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               South sinai
             </label>
-            <label class="custom-radio-container">
+            <label className="custom-radio-container">
               <input type="radio" name="custom-radio" value="option3" onChange={()=>{
                 settemp({...temp,country:"Suez"})
               }}/>
-              <span class="custom-radio-checkmark"></span>
+              <span className="custom-radio-checkmark"></span>
               Suez
             </label>
           </div>
@@ -338,8 +380,8 @@ function App(){
         <div id='content'>
       {/**button open serach*/}
           <div className='buttonSearch'>
-            <button class="button" onClick={changeHsearch}>
-              <span class="span">🔎</span>
+            <button className="button" onClick={changeHsearch}>
+              <span className="span">🔎</span>
             </button>
           </div> 
       {/**button open serach*/}
