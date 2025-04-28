@@ -1,6 +1,6 @@
 export default function FunApi(state,action){
     switch(action.type){
-        case "My location":
+        case "your location":
             return `https://api.openweathermap.org/data/2.5/weather?lat=${action.payload.latitude}&lon=${action.payload.longitude}&appid=4ffbfa8485a95042fd73469dca85c095`;
         case "Cario":
           return "https://api.openweathermap.org/data/2.5/weather?lat=30.0444&lon=31.2357&appid=4ffbfa8485a95042fd73469dca85c095";
@@ -10,8 +10,6 @@ export default function FunApi(state,action){
           return "https://api.openweathermap.org/data/2.5/weather?lat=31.2000924&lon=29.9187387&appid=4ffbfa8485a95042fd73469dca85c095";         
         case "Aswan":
             return "https://api.openweathermap.org/data/2.5/weather?lat=24.088938&lon=32.8998293&appid=4ffbfa8485a95042fd73469dca85c095";           
-        case "Asyut":
-            return "https://api.openweathermap.org/data/2.5/weather?lat=27.18&lon=31.18&appid=4ffbfa8485a95042fd73469dca85c095";           
         case "Dakahalia":
             return "https://api.openweathermap.org/data/2.5/weather?lat=31.05&lon=31.3833&appid=4ffbfa8485a95042fd73469dca85c095";           
         case "Faiyam":
@@ -59,6 +57,6 @@ export default function FunApi(state,action){
         case "Sharqia":
             return "https://api.openweathermap.org/data/2.5/weather?lat=30.5853&lon=31.4958&appid=4ffbfa8485a95042fd73469dca85c095";            
         default:
-        console.log("unknown"); 
+            return "https://api.openweathermap.org/data/2.5/weather?lat=30.0444&lon=31.2357&appid=4ffbfa8485a95042fd73469dca85c095";
     }
 }
